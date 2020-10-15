@@ -78,4 +78,57 @@ class Api extends \Restserver\Libraries\REST_Controller
 
 
 
+	public function show_get()
+	{
+		$id = $this->get('id');
+
+		$result = $this->property->get($id);
+
+
+		if ($result) {
+			$data = [
+				"id" => $result->id,
+				"createdAt" => $result->createdAt,
+				'owners' => '',
+				'address' =>
+					[
+						"house_name_number" => $result->house_name_number,
+						"postcode" => $result->postcode,
+					]
+			];
+
+			$this->answer(true,200, 'Selected property', $data);
+		} else {
+			$this->answer(false,404, 'Not found.');
+		}
+	}
+
+
+
+	public function all_get()
+	{
+		$props = $this->property->all();
+		$data = array();
+
+		foreach ($props as $prop) {
+
+			$propertyData = [
+				"id" => $prop->id,
+				"createdAt" => $prop->createdAt,
+				'owners' => '',
+				'address' =>
+					[
+						"house_name_number" => $prop->house_name_number,
+						"postcode" => $prop->postcode,
+					]
+			];
+
+			array_push($data, $propertyData);
+		}
+
+
+		$this->answer(true, 200 , 'All Property', $data);
+	}
+
+
 }

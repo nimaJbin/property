@@ -25,4 +25,13 @@ class Property extends CI_Model
 	}
 
 
+
+	public function all()
+	{
+		$this->db->select( "property.*, address.*, property.id as id, address.id as propId" );
+		$this->db->from('property');
+		$this->db->join('address', 'address.propertyId = property.id' );
+
+		return $this->db->get()->result();
+	}
 }
