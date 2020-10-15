@@ -34,4 +34,33 @@ class Property extends CI_Model
 
 		return $this->db->get()->result();
 	}
+
+
+
+	public function update( $id, $data = array() )
+	{
+		$get = $this->db->where('id', $id)->select('*')->get('property')->row();
+
+		if ( $get )
+		{
+			return $this->db->where( 'propertyId', $id )->update( 'address', $data );
+		}else{
+			return false;
+		}
+	}
+
+
+
+	public function delete($id)
+	{
+		$get = $this->db->where('id', $id)->select('*')->get('property')->row();
+
+		if ( $get )
+		{
+			return $this->db->where('id', $id)->delete('property');
+
+		}else{
+			return false;
+		}
+	}
 }

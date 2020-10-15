@@ -131,4 +131,56 @@ class Api extends \Restserver\Libraries\REST_Controller
 	}
 
 
+
+	public function delete_delete($id)
+	{
+		$result = $this->property->delete($id);
+
+
+		if ($result) {
+			$this->answer(true,200, 'Deleted');
+		} else {
+			$this->answer(false, 404,'Not found.');
+		}
+	}
+
+
+
+	public function update_put($id)
+	{
+
+		$houseName = $this->put('house_name_number');
+		$postCode = $this->put('postcode');
+
+
+		$data = [];
+
+		if (!empty($houseName)) {
+			$data['house_name_number'] = $houseName;
+		}
+
+		if (!empty($postCode)) {
+			$data['postcode'] = $postCode;
+		}
+
+
+		$result = $this->property->update($id, $data);
+
+		if ($result) {
+			$this->answer(true,200, 'Updated', $data);
+		} else {
+			$this->answer(false,404, 'Not found.');
+		}
+	}
+
+
+
+	public function answer($success, $http_code, $message = '', $data = '')
+	{
+
+		$answer = ['success' => $success, 'message' => $message, 'data' => $data];
+		$this->set_response($answer, $http_code);
+
+	}
+
 }
