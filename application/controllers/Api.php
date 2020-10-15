@@ -19,7 +19,7 @@ class Api extends \Restserver\Libraries\REST_Controller
 
 
 
-	public function createProperty_post()
+	public function create_post()
 	{
 
 		$this->load->library('form_validation');
